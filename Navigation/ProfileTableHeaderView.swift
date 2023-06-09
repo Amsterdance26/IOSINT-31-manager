@@ -79,7 +79,7 @@ extension ProfileTableHeaderView: UITableViewDataSource {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         guard let cell = tableView.dequeueReusableCell(withIdentifier: PostTableViewCell.id, for: indexPath) as? PostTableViewCell
         else { fatalError() }
-        cell.configure(posts: posts[indexPath.row])
+        cell.configure(posts[indexPath.row])
         return cell
     }
 }

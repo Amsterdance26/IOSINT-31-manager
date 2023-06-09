@@ -7,9 +7,10 @@
 
 import UIKit
 import StorageService
+import iOSIntPackage
 
 class PostTableViewCell: UITableViewCell {
-
+    
     static let id = "PostTableViewCell"
     let author: UILabel = {
         let label = UILabel()
@@ -59,33 +60,40 @@ class PostTableViewCell: UITableViewCell {
             author.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 16),
             author.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 16),
             author.bottomAnchor.constraint(equalTo: image.topAnchor, constant: -12),
-
+            
             image.topAnchor.constraint(equalTo: author.bottomAnchor, constant: 12),
             image.leadingAnchor.constraint(equalTo: contentView.leadingAnchor),
             image.trailingAnchor.constraint(equalTo: contentView.trailingAnchor),
             image.heightAnchor.constraint(equalToConstant: 400),
             image.widthAnchor.constraint(equalToConstant: 100),
             image.bottomAnchor.constraint(equalTo: descriptionLabel.topAnchor, constant: -16),
-
+            
             descriptionLabel.topAnchor.constraint(equalTo: image.bottomAnchor, constant: 16),
             descriptionLabel.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 16),
             descriptionLabel.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -16),
             descriptionLabel.bottomAnchor.constraint(equalTo: likesLabel.topAnchor, constant: -16),
-
+            
             likesLabel.topAnchor.constraint(equalTo: descriptionLabel.bottomAnchor, constant: 16),
             likesLabel.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 16),
             likesLabel.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -16),
-
+            
             viewLabel.topAnchor.constraint(equalTo: descriptionLabel.bottomAnchor, constant: 16),
             viewLabel.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -16),
             viewLabel.bottomAnchor.constraint(equalTo: contentView.bottomAnchor,constant: -16)
         ])
     }
-    func configure(posts: Post) {
+    
+    public func configure(_ posts: Post) {
         author.text = posts.author
         image.image = posts.image
+        
+        let imageProcessor = ImageProcessor()
+        imageProcessor.processImage(sourceImage: posts.image, filter: .colorInvert) { processedImage in
+            image.image = processedImage
+        }
+        
         descriptionLabel.text = posts.description
-        likesLabel.text = "Likes: \(posts.likes)"
-        viewLabel.text = "Views: \(posts.view)"
+        likesLabel.text = "\(posts.likes) likes"
+        viewLabel.text = "\(posts.view) views"
     }
 }
