@@ -85,13 +85,11 @@ class PostTableViewCell: UITableViewCell {
     
     public func configure(_ posts: Post) {
         author.text = posts.author
-        image.image = UIImage(named: posts.image)
-
+        image.image = posts.image
+        
         let imageProcessor = ImageProcessor()
-        if let image = UIImage(named: posts.image) {
-            imageProcessor.processImage(sourceImage: image, filter: .fade) { processedImage in
-                image.image = processedImage
-            }
+        imageProcessor.processImage(sourceImage: posts.image, filter: .colorInvert) { processedImage in
+            image.image = processedImage
         }
         
         descriptionLabel.text = posts.description
